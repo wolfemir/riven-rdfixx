@@ -1,0 +1,20 @@
+services:
+  riven:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: riven:dev
+    container_name: riven
+    restart: unless-stopped
+    network_mode: host
+    tty: true
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - ORIGIN=${RIVEN_ORIGIN:-http://localhost:8080}
+      - RIVEN_FORCE_ENV=true
+      - RIVEN_DATABASE_HOST=sqlite:////riven/data/media.db
+    volumes:
+      - ./data:/riven/data
+      - /mnt:/mnt
